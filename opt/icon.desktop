@@ -1,0 +1,9 @@
+[Desktop Entry]
+X-AppImage-Name=git
+X-AppImage-Version=1.0.0
+X-AppImage-Arch=x86_64
+Name=Git
+Exec=git
+Icon=logo-square
+Type=Application
+Categories=Utility;
