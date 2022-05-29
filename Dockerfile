@@ -17,10 +17,13 @@ WORKDIR /app
 RUN apt-get install -y make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
 RUN wget "https://github.com/git/git/archive/v$GIT_VERSION.tar.gz" -O git.tar.gz
 RUN tar -xf git.tar.gz
+RUN cd git-* && gnu99_number=`awk "/gnu99\" at the end/{print NR+1}" Makefile` && sed "$gnu99_number{s/$/ -std=gnu99/}" -i Makefile
 RUN cd git-* && make prefix=/usr/local all
-RUN cd git-* && make prefix=/usr/local install
+RUN cd git-* && make prefix=/usr/local DESTDIR=/AppDir install
+RUN cd git-* && find /AppDir/usr/local/bin -exec strip {} \;
+RUN cd git-* && find /AppDir/usr/local/libexec/git-core -exec strip {} \;
 
 ## Build the appimage
-COPY ./opt /opt
-RUN /opt/build.sh
-
+COPY ./opt/* /AppDir/
+RUN chmod u+x /AppDir/AppRun
+RUN OUTPUT="/opt/git.appimage" /usr/bin/linuxdeploy --appdir=/AppDir --output=appimage
