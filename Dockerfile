@@ -18,10 +18,9 @@ RUN apt-get install -y make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libex
 RUN wget "https://github.com/git/git/archive/v$GIT_VERSION.tar.gz" -O git.tar.gz
 RUN tar -xf git.tar.gz
 RUN cd git-* && gnu99_number=`awk "/gnu99\" at the end/{print NR+1}" Makefile` && sed "$gnu99_number{s/$/ -std=gnu99/}" -i Makefile
-RUN cd git-* && make prefix=/usr/local all
-RUN cd git-* && make prefix=/usr/local DESTDIR=/AppDir install
-RUN cd git-* && find /AppDir/usr/local/bin -exec strip {} \;
-RUN cd git-* && find /AppDir/usr/local/libexec/git-core -exec strip {} \;
+RUN cd git-* && make prefix=/tmp/e2e0f1d4582523f340460b0062939854/usr/local all
+RUN cd git-* && make prefix=/tmp/e2e0f1d4582523f340460b0062939854/usr/local DESTDIR=/AppDir install
+RUN cd git-* && find /AppDir -type f -perm +a+x -exec strip {} \;
 
 ## Build the appimage
 COPY ./opt/* /AppDir/
