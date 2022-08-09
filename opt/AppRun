@@ -3,6 +3,5 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 
 unset ARGV0
 export GIT_EXEC_PATH=$HERE/usr/libexec/git-core
-# export PATH=${HERE}/usr/bin:${HERE}/usr/libexec/git-core:$PATH
 export PATH=${HERE}/usr/bin:$PATH
 exec "${PROG:-git}" "$@"
