@@ -1,10 +1,8 @@
 #!/bin/bash
 HERE="$(dirname "$(readlink -f "${0}")")"
-ROOT=/tmp/e2e0f1d4582523f340460b0062939854
-
-rm -f $ROOT
-ln -s $HERE/$ROOT $ROOT
 
 unset ARGV0
-export PATH=${ROOT}/usr/local/bin:${ROOT}/usr/local/libexec/git-core:$PATH
+export GIT_EXEC_PATH=$HERE/usr/libexec/git-core
+# export PATH=${HERE}/usr/bin:${HERE}/usr/libexec/git-core:$PATH
+export PATH=${HERE}/usr/bin:$PATH
 exec "${PROG:-git}" "$@"
