@@ -20,7 +20,7 @@ fi
 
 cd git-$GIT_VERSION
 
-make CFLAGS="-O2 -Wall -std=gnu99" prefix=/usr DESTDIR=/AppDir install || exit -1
+make CSPRNG_METHOD=openssl CFLAGS="-O2 -Wall -std=gnu99" prefix=/usr DESTDIR=/AppDir install || exit -1
 
 ## Build the appimage
 chmod u+x /AppDir/AppRun
