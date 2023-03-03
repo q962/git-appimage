@@ -1,9 +1,10 @@
 #!/bin/sh
 
-docker images | grep git-appimage > /dev/null
+alias docker=${DOCKER:-docker}
 
+docker images | grep git-appimage > /dev/null
 if [ $? -ne 0 ] ; then
-    docker build --tag git-appimage .
+    docker build --tag git-appimage . || exit -1
 fi
 
 GIT_VERSION=${1:-2.39.2}
